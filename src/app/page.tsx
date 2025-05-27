@@ -270,9 +270,10 @@ export default function HomePage() {
             to launch.
           </motion.p>
           <motion.div
-            variants={heroTextVariant(0.7)} // Delay for button group, using heroTextVariant
+            variants={heroTextVariant(0.7)}
             className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6"
           >
+            {/* View My Work */}
             <motion.a
               href="#works"
               onClick={handleSmoothScroll}
@@ -285,6 +286,35 @@ export default function HomePage() {
               View My Work{" "}
               <ArrowRight className="h-5 w-5 group-hover:translate-x-1.5 transition-transform duration-300 ease-out" />
             </motion.a>
+
+            {/* Resume Button */}
+            <motion.a
+              href="/Vikash Kumar-FrontEnd.pdf" // replace with your actual resume file path
+              target="_blank"
+              rel="noopener noreferrer"
+              className="
+    bg-slate-900
+    text-slate-100
+    font-bold py-4 px-10 rounded-lg text-lg
+    inline-flex items-center gap-2
+    border-2 border-purple-600/80
+    shadow-[0_0_15px_-3px_rgba(168,85,247,0.5)] /* Subtle purple glow */
+    group transition-all duration-300 ease-in-out
+    hover:bg-purple-600/10 /* Slight purple wash on hover */
+    hover:text-white
+    hover:border-purple-500
+    hover:shadow-[0_0_25px_-3px_rgba(168,85,247,0.7)] /* Enhanced glow */
+  "
+              variants={buttonVariants}
+              initial="initial"
+              whileHover="hover"
+              whileTap="tap"
+            >
+              View Résumé{" "}
+              <ArrowRight className="h-5 w-5 group-hover:translate-x-1.5 transition-transform duration-300 ease-out" />
+            </motion.a>
+
+            {/* Get In Touch */}
             <motion.a
               href="#contact"
               onClick={handleSmoothScroll}
