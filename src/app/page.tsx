@@ -1,26 +1,46 @@
 "use client"; // Required for Framer Motion and hooks
 
-// Imports from both files, ensuring all dependencies are met
+// Imports
 import ProjectCard from "@/components/ProjectCard"; // Assuming ProjectCard is in this path
-import { ArrowRight, Mail, Github, Linkedin } from "lucide-react";
+import {
+  ArrowRight,
+  Mail,
+  Github,
+  Linkedin,
+  Instagram,
+  // X from lucide-react is no longer needed here if only used for the social icon
+} from "lucide-react";
 import { motion, useAnimation, HTMLMotionProps } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import {
-  useEffect, // Standard useEffect
+  useEffect,
   ReactNode,
   ElementType,
   useMemo,
-  useState, // For HeroHeading
-  useEffect as useEffectReact, // Alias for HeroHeading's useEffect
+  useState,
+  useEffect as useEffectReact,
 } from "react";
 
-// projectsData from the second file (identical to the first)
+// Custom SVG component for the X platform logo
+const XLogoIcon = ({ className = "" }: { className?: string }) => (
+  <svg
+    role="img"
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className} // Pass className for styling (e.g., size, color)
+    fill="currentColor"
+  >
+    <title>X</title>
+    <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />
+  </svg>
+);
+
 const projectsData = [
   {
     title: "GTA VI Countdown",
     description:
       "Made a countdown website and integrated Gemini Flash 1.5 API to generate custom output in intel, Leonida Scoop and Weazel news",
-    imageUrl: "/images/gta.jpg", // Ensure these image paths are correct in your `public` folder
+    imageUrl: "/images/gta.jpg",
     projectUrl: "https://hottogether.vercel.app",
     githubUrl: "https://github.com/thevikashrajput/gta6-countdown",
     tags: ["JavaScript", "CSS", "AI"],
@@ -53,7 +73,7 @@ const projectsData = [
   },
 ];
 
-// --- Animation Variants from the second file ---
+// --- Animation Variants ---
 const sectionVariants = {
   hidden: { opacity: 0, y: 50 },
   visible: (delay = 0) => ({
@@ -90,7 +110,6 @@ const buttonVariants = {
   initial: { scale: 1, boxShadow: "0px 5px 10px rgba(0,0,0,0.1)" },
   hover: {
     scale: 1.05,
-    // Uses the --*-rgb variables defined in globals.css
     boxShadow: "0px 8px 15px rgba(var(--primary-rgb), 0.3)",
     transition: { duration: 0.3, ease: "circOut" },
   },
@@ -100,7 +119,6 @@ const buttonVariants = {
 const skillTagVariants = {
   hover: {
     y: -4,
-    // Uses the --*-rgb variables defined in globals.css
     backgroundColor: "rgba(var(--accent-rgb), 0.25)",
     transition: { duration: 0.2, ease: "easeOut" },
   },
@@ -110,7 +128,7 @@ const skillTagVariants = {
   },
 };
 
-// --- Typed Props for AnimatedSection (from second file, identical to first) ---
+// --- Typed Props for AnimatedSection ---
 interface AnimatedSectionProps {
   children: ReactNode;
   className?: string;
@@ -121,7 +139,7 @@ interface AnimatedSectionProps {
   tag?: ElementType;
 }
 
-// Helper component for scroll-triggered animations (from second file, identical to first)
+// Helper component for scroll-triggered animations
 const AnimatedSection: React.FC<AnimatedSectionProps> = ({
   children,
   className,
@@ -161,7 +179,7 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({
   );
 };
 
-// HeroHeading component from the first code file
+// HeroHeading component
 function HeroHeading() {
   const fullText = "Hi, I'm Vikash.";
   const [displayedText, setDisplayedText] = useState("");
@@ -194,72 +212,60 @@ function HeroHeading() {
       <style jsx>{`
         .blinking-cursor {
           display: inline-block;
-          /* width: 1ch; Ensure cursor width is appropriate, or remove if not needed */
           animation: blink 1s step-end infinite;
-          color: #f59e0b; /* amber-400 or your preferred cursor color */
+          color: #f59e0b;
         }
         @keyframes blink {
           50% {
             opacity: 0;
           }
         }
-        /* Ensure whitespace-pre is effective, you might need min-height if text is short */
         h1.whitespace-pre {
-          min-height: 1.2em; /* Adjust based on font size to prevent layout shift */
+          min-height: 1.2em;
         }
       `}</style>
     </motion.h1>
   );
 }
 
-// HomePage component from the second file, with HeroHeading integrated
+// HomePage component
 export default function HomePage() {
-  // Smooth scroll handler for internal links
   const handleSmoothScroll = (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
     const href = event.currentTarget.getAttribute("href");
     if (href && href.startsWith("#")) {
-      event.preventDefault(); // Prevent default jump
+      event.preventDefault();
       const targetId = href.substring(1);
       const targetElement = document.getElementById(targetId);
-
       if (targetElement) {
-        // This respects scroll-margin-top (from scroll-mt-*)
         targetElement.scrollIntoView({
           behavior: "smooth",
           block: "start",
         });
       }
     }
-    // For external links or mailto:, default behavior is fine
   };
 
   return (
-    // Using `bg-background` and `text-foreground` which are now defined in @theme
     <div className="bg-background text-foreground space-y-32 sm:space-y-40 md:space-y-48 pb-20 overflow-x-hidden">
       {/* Hero Section */}
       <motion.section
         id="hero"
         className="min-h-[85vh] flex flex-col justify-center items-center text-center pt-20 px-4 sm:px-6 lg:px-8 relative isolate"
-        variants={sectionVariants} // This variant will apply to the section as a whole
+        variants={sectionVariants}
         initial="hidden"
         animate="visible"
-        custom={0.1} // Delay for the section
+        custom={0.1}
       >
         <div className="absolute inset-0 -z-10 overflow-hidden opacity-70">
-          {/* Using bg-primary/10 which relies on 'primary' being defined in @theme */}
           <div className="absolute -top-1/4 -left-1/4 w-1/2 h-1/2 bg-primary/10 rounded-full blur-3xl animate-pulse-slow opacity-60"></div>
           <div className="absolute -bottom-1/4 -right-1/4 w-3/4 h-3/4 bg-accent/10 rounded-full blur-3xl animate-pulse-slower opacity-50 animation-delay-2000"></div>
         </div>
-
         <div className="max-w-4xl">
-          {/* Use the HeroHeading component from the first file */}
           <HeroHeading />
-
-          {/* Paragraph and buttons from the second file's hero section, using heroTextVariant */}
           <motion.p
-            variants={heroTextVariant(0.5)} // Delay for paragraph, using heroTextVariant
+            variants={heroTextVariant(0.5)}
             className="text-xl sm:text-2xl text-foreground/80 mb-12 leading-loose"
           >
             I'm a{" "}
@@ -273,7 +279,6 @@ export default function HomePage() {
             variants={heroTextVariant(0.7)}
             className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6"
           >
-            {/* View My Work */}
             <motion.a
               href="#works"
               onClick={handleSmoothScroll}
@@ -286,25 +291,17 @@ export default function HomePage() {
               View My Work{" "}
               <ArrowRight className="h-5 w-5 group-hover:translate-x-1.5 transition-transform duration-300 ease-out" />
             </motion.a>
-
-            {/* Resume Button */}
             <motion.a
-              href="/Vikash Kumar-FrontEnd.pdf" // replace with your actual resume file path
+              href="/Vikash Kumar-FrontEnd.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="
-    bg-slate-900
-    text-slate-100
-    font-bold py-4 px-10 rounded-lg text-lg
-    inline-flex items-center gap-2
-    border-2 border-purple-600/80
-    shadow-[0_0_15px_-3px_rgba(168,85,247,0.5)] /* Subtle purple glow */
-    group transition-all duration-300 ease-in-out
-    hover:bg-purple-600/10 /* Slight purple wash on hover */
-    hover:text-white
-    hover:border-purple-500
-    hover:shadow-[0_0_25px_-3px_rgba(168,85,247,0.7)] /* Enhanced glow */
-  "
+                bg-slate-900 text-slate-100 font-bold py-4 px-10 rounded-lg text-lg
+                inline-flex items-center gap-2 border-2 border-purple-600/80
+                shadow-[0_0_15px_-3px_rgba(168,85,247,0.5)] group transition-all duration-300 ease-in-out
+                hover:bg-purple-600/10 hover:text-white hover:border-purple-500
+                hover:shadow-[0_0_25px_-3px_rgba(168,85,247,0.7)]
+              "
               variants={buttonVariants}
               initial="initial"
               whileHover="hover"
@@ -313,8 +310,6 @@ export default function HomePage() {
               View Résumé{" "}
               <ArrowRight className="h-5 w-5 group-hover:translate-x-1.5 transition-transform duration-300 ease-out" />
             </motion.a>
-
-            {/* Get In Touch */}
             <motion.a
               href="#contact"
               onClick={handleSmoothScroll}
@@ -331,10 +326,10 @@ export default function HomePage() {
         </div>
       </motion.section>
 
-      {/* Works Section (from second file) */}
+      {/* Works Section */}
       <AnimatedSection
         id="works"
-        className="scroll-mt-32 px-4 sm:px-6 lg:px-8" // scroll-mt-32 provides offset for scrolling
+        className="scroll-mt-32 px-4 sm:px-6 lg:px-8"
         threshold={0.15}
       >
         <div className="max-w-6xl mx-auto text-center mb-16 sm:mb-20">
@@ -371,11 +366,11 @@ export default function HomePage() {
         </div>
       </AnimatedSection>
 
-      {/* About Section (from second file) */}
+      {/* About Section */}
       <AnimatedSection
         id="about"
         className="scroll-mt-32 px-4 sm:px-6 lg:px-8"
-        threshold={0.25} // Adjusted threshold from 0.2 to 0.25 as in file 2's definition
+        threshold={0.25}
       >
         <div className="max-w-5xl mx-auto">
           <div className="text-center sm:text-left mb-12 sm:mb-16">
@@ -403,7 +398,7 @@ export default function HomePage() {
                 transition={{ duration: 0.3 }}
               >
                 <img
-                  src="/images/photo.jpeg" // Ensure this path is correct
+                  src="/images/photo.jpeg"
                   alt="Vikash Rajput"
                   className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
                 />
@@ -468,11 +463,11 @@ export default function HomePage() {
         </div>
       </AnimatedSection>
 
-      {/* Contact Section (from second file) */}
+      {/* Contact Section */}
       <AnimatedSection
         id="contact"
         className="scroll-mt-32 text-center py-20 sm:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-primary/10"
-        threshold={0.2} // Adjusted threshold from 0.25 (file 1) to 0.2 (file 2)
+        threshold={0.2}
       >
         <div className="max-w-2xl mx-auto">
           <motion.h2
@@ -489,7 +484,7 @@ export default function HomePage() {
             to hear from you.
           </motion.p>
           <motion.a
-            href="mailto:thevikashrajput@hotmail.com" // Mailto from second file
+            href="mailto:thevikashrajput@hotmail.com"
             className="bg-accent text-accent-foreground font-bold py-4 px-12 rounded-lg text-lg inline-flex items-center gap-2.5 shadow-xl group"
             variants={buttonVariants}
             initial="initial"
@@ -532,6 +527,38 @@ export default function HomePage() {
               whileTap={{ scale: 0.9 }}
             >
               <Linkedin size={32} />
+            </motion.a>
+            <motion.a
+              href="https://instagram.com/thevikashrajput_"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-foreground/60 hover:text-primary transition-all duration-300"
+              aria-label="Instagram Profile"
+              whileHover={{
+                scale: 1.15,
+                y: -2,
+                color: "hsl(var(--primary-hsl))",
+              }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <Instagram size={32} />
+            </motion.a>
+            {/* X Platform Link with Custom SVG Icon */}
+            <motion.a
+              href="https://x.com/thevikashrajput" // Your X profile URL
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-foreground/60 hover:text-primary transition-all duration-300"
+              aria-label="X Profile"
+              whileHover={{
+                scale: 1.15,
+                y: -2,
+                color: "hsl(var(--primary-hsl))",
+              }}
+              whileTap={{ scale: 0.9 }}
+            >
+              {/* Using the custom XLogoIcon component with Tailwind size classes */}
+              <XLogoIcon className="w-8 h-8" /> {/* Corresponds to size={32} */}
             </motion.a>
           </motion.div>
         </div>
