@@ -39,8 +39,8 @@ const Footer = () => {
             <span className="hidden sm:inline">GitHub</span>
           </a>
 
-          {/* LinkedIn Link */}
-          <a
+          
+{/*           <a
             href="https://linkedin.com/in/thevikashrajput"
             target="_blank"
             rel="noopener noreferrer"
@@ -51,7 +51,7 @@ const Footer = () => {
             <span className="hidden sm:inline">LinkedIn</span>
           </a>
 
-          {/* Instagram Link */}
+          
           <a
             href="https://instagram.com/thevikashrajput_" // Replace with your Instagram username
             target="_blank"
@@ -61,7 +61,7 @@ const Footer = () => {
           >
             <Instagram className="h-5 w-5" />
             <span className="hidden sm:inline">Instagram</span>
-          </a>
+          </a> */}
 
           {/* X (formerly Twitter) Link with SVG Icon */}
           <a
