@@ -513,7 +513,7 @@ export default function HomePage() {
             >
               <Github size={32} />
             </motion.a>
-            <motion.a
+{/*             <motion.a
               href="https://linkedin.com/in/thevikashrajput"
               target="_blank"
               rel="noopener noreferrer"
@@ -542,7 +542,7 @@ export default function HomePage() {
               whileTap={{ scale: 0.9 }}
             >
               <Instagram size={32} />
-            </motion.a>
+            </motion.a> */}
             {/* X Platform Link with Custom SVG Icon */}
             <motion.a
               href="https://x.com/thevikashrajput" // Your X profile URL
